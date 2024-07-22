@@ -1,0 +1,8 @@
+{% extends BASE_TEMPLATE|default:"base.htm" %}
+{% load static %}
+
+{% block content %}
+    <main id="body_main" hx-get="{% url 'parademgr:list_organizations' display='table' %}" hx-trigger="load"> 
+        this is the organizations list page...
+    </main>
+{% endblock content %}

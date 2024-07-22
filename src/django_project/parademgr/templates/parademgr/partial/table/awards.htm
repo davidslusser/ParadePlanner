@@ -1,0 +1,44 @@
+<div class="container-fluid px-5">
+    <div class="h2 text-primary fw-bold my-3">{{ title }}: 
+        <span class="h4 text-secondary mx-2">{% if subtitle %}{{ subtitle }}{% endif %}</span>
+    </div>
+
+    
+    <div class="d-flex justify-content-end mb-3">
+        {% if queryset %}<i id="paginationToggle" class="fa-solid fa-square-caret-down"></i>{% endif %}
+    </div>
+
+    <table id="myTable" class="table table-condensed table-bordered table-striped mt-3">
+        <thead>
+            <tr>
+                <th class="sortable">Category <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                <th class="sortable">Division <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                <th class="sortable">Name <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                <th class="sortable">Description <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                <th class="sortable">Amount <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if queryset %}
+        {% for row in queryset %}
+            <tr>
+                <td>{{ row.division.category }}</td>
+                <td>{{ row.division }}</td>
+                <td>{{ row.name }}</td>
+                <td>{{ row.description }}</td>
+                <td>{{ row.amount }}</td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+            <tr><td colspan="4" class="spanning-row text-center">No matching records found</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+    {% if queryset %}
+    <nav id="paginationNav">
+        <ul class="pagination justify-content-end"><!-- Pagination will be inserted here by JavaScript --></ul>
+    </nav>
+    {% endif %}
+</div>

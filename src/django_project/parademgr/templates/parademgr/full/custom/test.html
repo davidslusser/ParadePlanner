@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortable Table</title>
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+    <link href="{% static 'node_modules/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+
+    <link href="{% static 'paradeplanner/css/sortable.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-end mb-3">
+            <i id="paginationToggle" class="fa-solid fa-square-caret-down"></i>
+            <!-- <span class="ms-2">Enable Pagination</span> -->
+        </div>
+        <table class="table table-condensed table-bordered table-striped mt-3">
+            <thead>
+                <tr>
+                    <th class="sortable">Name <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                    <th class="sortable">Age <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                    <th class="sortable">City <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr><td><a href="#">John Doe</a></td><td>28</td><td>New York</td></tr>
+                    <tr><td><a href="www.google.com">Jane Smith</a></td><td>22</td><td>San Francisco</td></tr>
+                    <tr><td>Michael Brown</td><td>32</td><td>Chicago</td></tr>
+                    <tr><td><a href="#">Emily White</a></td><td>30</td><td>Los Angeles</td></tr>
+                    <tr><td>William Johnson</td><td>27</td><td>Houston</td></tr>
+                    <tr><td>Patricia Taylor</td><td>29</td><td>Phoenix</td></tr>
+                    <tr><td>Linda Anderson</td><td>33</td><td>Philadelphia</td></tr>
+                    <tr><td><a href="www.yahoo.com">David Harris A</a></td><td>31</td><td>San Antonio</td></tr>
+                    <tr><td><a href="www.google.com">David Harris B</a></td><td>31</td><td>San Antonio</td></tr>
+                    <tr><td>Barbara Martinez</td><td>26</td><td>Dallas</td></tr>
+                    <tr><td>Richard Clark</td><td>34</td><td>Austin</td></tr>
+                    <tr><td>Joseph Lewis</td><td>25</td><td>San Diego</td></tr>
+                    <tr><td>Thomas Robinson</td><td>28</td><td>Fort Worth</td></tr>
+            </tbody>
+        </table>
+        <nav id="paginationNav">
+            <ul class="pagination justify-content-end">
+                <!-- Pagination will be inserted here by JavaScript -->
+            </ul>
+        </nav>
+    </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> -->
+    <script type="text/javascript" src="{% static 'node_modules/@popperjs/core/dist/umd/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    
+    <!-- <script src="sortable.js"></script> -->
+    <script type="text/javascript" src="{% static 'paradeplanner/js/sortable.js' %}"></script>
+</body>
+</html>

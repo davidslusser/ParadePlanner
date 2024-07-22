@@ -66,6 +66,6 @@ target/
 # Project Specific
 local_test
 envs/.env.local
-django_project/django_logs
+django_logs
 django_project/yarn.lock
 django_project/__version__.py

@@ -1,0 +1,25 @@
+th.sortable {
+    cursor: pointer;
+    position: relative;
+}
+th.sortable .fa {
+    margin-left: 5px;
+    color: var(--bs-secondary);
+}
+th.sortable .fa.sort-active {
+    color: var(--bs-primary);
+}
+th.sortable .fa-sortable {
+    visibility: hidden;
+}
+th.sortable:hover .fa-sortable {
+    visibility: visible;
+}
+#paginationToggle {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--bs-primary);
+}
+#paginationToggle.disabled {
+    color: var(--bs-secondary);
+}

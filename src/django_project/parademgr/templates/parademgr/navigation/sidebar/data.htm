@@ -1,0 +1,26 @@
+<li class="sidebar-item">
+    <a href="#" class="sidebar-link collapsed" data-bs-target="#data" data-bs-toggle="collapse"
+        aria-expanded="false"><i class="fa-solid fa-file-lines pe-2"></i>
+        Data
+    </a>
+    <ul id="data" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+        <li class="sidebar-link">
+            <a hx-get="{% url 'parademgr:list_parades' display='table' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Parades</a>
+        </li>
+        <li class="sidebar-link">
+            <a hx-get="{% url 'parademgr:list_organizations' display='table' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Organizations</a>
+        </li>
+        <li class="sidebar-link">
+            <a hx-get="{% url 'parademgr:list_awards' display='table' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Awards</a>
+        </li>
+        <li class="sidebar-link">
+            <a hx-get="{% url 'parademgr:list_award_types' display='table' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Award Types</a>
+        </li>
+        <li class="sidebar-link">
+            <a hx-get="{% url 'parademgr:list_categories' display='table' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Categories</a>
+        </li>
+        <li class="sidebar-link">
+            <a hx-get="{% url 'parademgr:list_divisions' display='table' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Divisions</a>
+        </li>
+    </ul>
+</li>

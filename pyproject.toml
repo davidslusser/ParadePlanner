@@ -9,16 +9,17 @@ dependencies = [
     "django-filter",
     "django-handyhelpers",
     "django-hostutils",
-    "django-userextensions",
+    "django-phonenumber-field",
     "django-pygwalker",
     "django-signalcontrol",
+    "django-userextensions",
     "djangorestframework",
     "djangorestframework-filters==1.0.0.dev0",
     "drf-flex-fields",
     "drf-spectacular",
     "drf-renderer-xlsx",
 ]
-description = "django project created from djangoaddicts django_project_template"
+description = "Redwood City Parade Planner"
 dynamic = ["version"]
 keywords = ["django"]
 license = {file = "LICENSE"}
@@ -32,6 +33,7 @@ dev = [
     "bandit",
     "black",
     "coveralls",
+    "faker",
     "isort",
     "model-bakery",
     "mypy",

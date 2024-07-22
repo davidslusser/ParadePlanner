@@ -1,0 +1,33 @@
+{% extends "handyhelpers/handyhelpers_with_sidebar.htm" %}
+{% load static %}
+
+{% block favicon %}
+<title>{{ PROJECT_NAME|title }}</title>
+{% endblock favicon %}
+
+{% block project_head_extra %}
+<link href="{% static 'paradeplanner/css/sortable.css' %}" rel="stylesheet">
+{% endblock project_head_extra %}
+
+{% block sidebar %}
+{% include 'core/partials/sidebar.htm' %}
+{% endblock sidebar %}
+
+{% block mainnavbar %}
+{% include 'core/partials/navbar.htm' %}
+{% endblock mainnavbar %}
+
+{% block mainfooter %}
+{% include 'core/partials/footer.htm' %}
+{% endblock mainfooter%}
+
+{% block project_javascript_extra %}
+<script type="text/javascript" src="{% static 'paradeplanner/js/sortable.js' %}"></script>
+
+<script>   
+    // Listen for the htmx:afterOnLoad event
+    document.addEventListener('htmx:afterOnLoad', function(event) {
+      readTable();
+    });
+</script>
+{% endblock project_javascript_extra %}

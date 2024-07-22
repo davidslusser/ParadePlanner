@@ -1,0 +1,11 @@
+{% extends BASE_TEMPLATE|default:"base.htm" %}
+{% load static %}
+
+{% block local_head %}
+{% endblock %}
+
+{% block content %}
+<main id="body_main" hx-get="{% url 'parademgr:detail_parade' object.pk %}" hx-trigger="load"> 
+    this is the parade detail page...
+</main>
+{% endblock content %}
