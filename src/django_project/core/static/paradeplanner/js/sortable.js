@@ -1,35 +1,35 @@
-function readTable() {
-
+function readTable(table) {
     const rowsPerPage = 10;
     let currentPage = 1;
     let currentSortColumn = null;
     let currentSortOrder = true; // true for ascending, false for descending
     let paginationEnabled = true;
 
-    const tableBody = document.querySelector("table tbody");
+    const tableBody = table.querySelector("tbody");
+    if (!tableBody) return;
+
     const rows = Array.from(tableBody.querySelectorAll("tr"));
     const totalRows = rows.length;
     let sortedRows = rows.slice();
 
-   
-    const renderTable = (data, page = 1, rowsPerPage = 5) => {
+    const renderTable = (data, page = 1, rowsPerPage = rowsPerPage) => {
         tableBody.innerHTML = "";
-        
+
         if (paginationEnabled) {
             const start = (page - 1) * rowsPerPage;
             const end = start + rowsPerPage;
             data.slice(start, end).forEach(row => tableBody.appendChild(row));
-            renderPagination(data.length, page, rowsPerPage);
-            document.getElementById("paginationNav").style.display = 'block';
+            renderPagination(data.length, page, rowsPerPage, table);
         } else {
             data.forEach(row => tableBody.appendChild(row));
-            document.getElementById("paginationNav").style.display = 'none';
         }
     };
 
-    const renderPagination = (totalRows, page, rowsPerPage) => {
+    const renderPagination = (totalRows, page, rowsPerPage, table) => {
         const totalPages = Math.ceil(totalRows / rowsPerPage);
-        const pagination = document.querySelector(".pagination");
+        const pagination = table.parentNode.querySelector(".pagination");
+        if (!pagination) return;
+
         pagination.innerHTML = "";
 
         for (let i = 1; i <= totalPages; i++) {
@@ -40,7 +40,7 @@ function readTable() {
             `;
         }
 
-        document.querySelectorAll(".page-link").forEach(link => {
+        pagination.querySelectorAll(".page-link").forEach(link => {
             link.addEventListener("click", (e) => {
                 e.preventDefault();
                 currentPage = parseInt(e.target.textContent);
@@ -55,7 +55,7 @@ function readTable() {
         v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
     )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
 
-    document.querySelectorAll("th.sortable").forEach(th => th.addEventListener("click", () => {
+    table.querySelectorAll("th.sortable").forEach(th => th.addEventListener("click", () => {
         const idx = Array.from(th.parentNode.children).indexOf(th);
         const asc = !(currentSortColumn === idx && currentSortOrder);  // Toggle sort order
 
@@ -64,7 +64,7 @@ function readTable() {
 
         sortedRows.sort(comparer(idx, asc));
 
-        document.querySelectorAll('th.sortable').forEach(header => {
+        table.querySelectorAll('th.sortable').forEach(header => {
             header.classList.remove('asc', 'desc');
             header.querySelector('.fa-sort-up').classList.remove('sort-active');
             header.querySelector('.fa-sort-down').classList.remove('sort-active');
@@ -84,36 +84,23 @@ function readTable() {
         renderTable(sortedRows, currentPage, rowsPerPage);
     }));
 
-    document.getElementById("paginationToggle").addEventListener("click", () => {
-        paginationEnabled = !paginationEnabled;
-        document.getElementById("paginationToggle").classList.toggle('disabled', !paginationEnabled);
-        renderTable(sortedRows, currentPage, rowsPerPage);
-    });
+    const paginationToggle = table.parentNode.querySelector(".pagination-toggle");
+    if (paginationToggle) {
+        paginationToggle.addEventListener("click", () => {
+            paginationEnabled = !paginationEnabled;
+            paginationToggle.classList.toggle('disabled', !paginationEnabled);
+            paginationToggle.style.color = paginationEnabled ? 'black' : 'gray';
+            renderTable(sortedRows, currentPage, rowsPerPage);
+        });
+    }
 
     renderTable(sortedRows, currentPage, rowsPerPage);
-
 }
 
-
-function updateColspan(tableId) {
-    const table = document.getElementById(tableId);
-    if (!table) {
-        console.error(`Table with id "${tableId}" not found.`);
-        return;
-    }
-
-    const headerCells = table.querySelectorAll("thead th");
-    const spanningRow = table.querySelector(".spanning-row td");
-
-    if (spanningRow) {
-        // Set the colspan attribute to the number of header cells
-        spanningRow.colSpan = headerCells.length;
-    } else {
-        console.error(`Spanning row not found in table with id "${tableId}".`);
-    }
+function initializeTables() {
+    document.querySelectorAll(".sortable-table-wrapper table").forEach(table => readTable(table));
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
-    readTable();
+    initializeTables();
 });

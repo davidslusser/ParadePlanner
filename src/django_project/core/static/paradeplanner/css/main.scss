@@ -1,0 +1,48 @@
+// Light Mode Colors
+$light-primary: #173058;
+$light-secondary: #6c757d;
+$light-success: #28a745;
+$light-info: #17a2b8;
+$light-warning: #edb350;
+$light-danger: #d87857;
+$light-light: #f8f9fa;
+$light-dark: #343a40;
+
+
+// Global Color Variables
+$primary: $light-primary;
+$secondary: $light-secondary;
+$success: $light-success;
+$info: $light-info;
+$warning: $light-warning;
+$danger: $light-danger;
+$light: $light-light;
+$dark: $light-dark;
+$enable-negative-margins: true;
+$enable-shadows: true;
+$dark-bg-subtle: $primary;
+
+
+a {
+    @extend .text-decoration-none;
+  }
+
+body {
+  color: var(--bs-primary) !important;
+}
+
+
+.cursor-pointer {
+  cursor: pointer;
+}
+  
+.fs-small {
+  font-size: .5rem !important; 
+}
+
+.sidebar-link {
+  color: var(--bs-light) !important;
+}
+
+
+@import "../../../../staticroot/node_modules/bootstrap/scss/bootstrap";

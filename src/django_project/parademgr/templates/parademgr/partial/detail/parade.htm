@@ -24,7 +24,7 @@
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="participants" role="tabpanel" aria-labelledby="participants-tab">
-                {% with object.participant_set.all as queryset %}
+                {% with object.get_participants as queryset %}
                 {% include 'parademgr/partial/table/participants.htm' %}
                 {% endwith %}
             </div>
@@ -33,7 +33,9 @@
             </div> -->
 
             <div class="tab-pane fade" id="awards" role="tabpanel" aria-labelledby="awards-tab">
-
+              {% with object.get_awards as queryset %}
+              {% include 'parademgr/partial/table/awards.htm' %}
+              {% endwith %}
             </div>
           </div>
     </div>

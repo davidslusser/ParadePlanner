@@ -2,7 +2,7 @@ import faker
 import random
 from model_bakery import baker
 
-from parademgr.models import Award, AwardType, Category, Contact, Division, Address, EmailAddress, Link, Organization, Parade, Participant, PhoneNumber
+from parademgr.models import Award, AwardType, Category, Contact, Division, Address, EmailAddress, Link, Organization, Parade, Participant, ParticipantAward, PhoneNumber
 
 
 def create_parades():
@@ -24,7 +24,7 @@ def create_organizations(qty: int = 1) -> None:
             "name": p["company"],
             "description": f.paragraph(),
         }
-        organization, is_new = Organization.objects.get_or_create(**data, defaults={"name": data["name"]})
+        organization, is_new = Organization.objects.get_or_create(name=p["company"], defaults={"name": data["name"]})
         if is_new:
             # create an link address, phone, email, and contact
             phone = PhoneNumber.objects.create(
@@ -110,7 +110,7 @@ def create_divisions() -> None:
             "data": [
                 {"name": "Youth Marching Band", "label": "A", "description": ""},
                 {"name": "Pipe or Fipe Band", "label": "B", "description": ""},
-                {"name": "community Band", "label": "C", "description": ""},
+                {"name": "Community Band", "label": "C", "description": ""},
             ]
         },
         {
@@ -203,8 +203,9 @@ def create_award_types() -> None:
         AwardType.objects.get_or_create(name=data["name"], defaults=data)
 
 
-def create_awards(qty: int = 1) -> None:
+def create_awards() -> None:
     data_list: list = [
+        # Floats
         {
             "division": "Amateur, San Mateo County", 
             "data": [
@@ -235,6 +236,253 @@ def create_awards(qty: int = 1) -> None:
                 {"name": "2nd Place", "description": "", "award_type": "plaque", "amount": None},
             ]
         },
+        # Bands
+        {
+            "division": "Youth Marching Band", 
+            "data": [
+                {"name": "1st Place", "description": "Ann Anderson Grand Sweepstakes", "award_type": "cash", "amount": "1000.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "900.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "800.00"},
+            ]
+        },
+        {
+            "division": "Pipe or Fipe Band", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "500.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "400.00"},
+            ]
+        },
+        {
+            "division": "Community Band", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "400.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "300.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "200.00"},
+                {"name": "4th Place", "description": "", "award_type": "cash", "amount": "100.00"},
+            ]
+        },
+        # Drum Corps
+        {
+            "division": "Drum and Bugle Corps", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "750.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "600.00"},
+            ]
+        },
+        {
+            "division": "Drum or Drumand Bell Corps", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "750.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "600.00"},
+            ]
+        },
+        # Military
+        {
+            "division": "Active", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "plaque", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "plaque", "amount": None},
+            ]
+        },
+        {
+            "division": "Reserve", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "plaque", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "plaque", "amount": None},
+            ]
+        },
+        {
+            "division": "Guard", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "plaque", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "plaque", "amount": None},
+            ]
+        },
+        {
+            "division": "Veterans Group", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "plaque", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "plaque", "amount": None},
+            ]
+        },
+        # Drill Teams
+        {
+            "division": "Senior Drill or Tall Flags", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "350.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "250.00"},
+            ]
+        },
+        {
+            "division": "Junior Drill or Tall Flags", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "350.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "250.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "150.00"},
+            ]
+        },
+        {
+            "division": "Novelty Drill", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "350.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "250.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "150.00"},
+            ]
+        },
+        {
+            "division": "Senior Color Guard", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "200.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "100.00"},
+            ]
+        },
+        {
+            "division": "Junior Color Guard", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "200.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "100.00"},
+            ]
+        },
+        {
+            "division": "Senior Drill Captain", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "medal", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "medal", "amount": None},
+            ]
+        },
+        {
+            "division": "Junior Drill Captain", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "medal", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "medal", "amount": None},
+            ]
+        },
+        # Baton Corps
+        {
+            "division": "Senior Solo", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "medal", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "medal", "amount": None},
+            ]
+        },
+        {
+            "division": "Junior Solo", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "medal", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "medal", "amount": None},
+            ]
+        },
+        {
+            "division": "Drum Major", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "medal", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "medal", "amount": None},
+            ]
+        },
+        {
+            "division": "Senior Corps", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "200.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "100.00"},
+            ]
+        },
+        {
+            "division": "Junior Corps", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "200.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "100.00"},
+            ]
+        },
+        # Vehicles
+        {
+            "division": "Vintage Carriage (Pre 1949)", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "certificate", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "certificate", "amount": None},
+            ]
+        },
+        {
+            "division": "Vintage Municipal (Pre 1949)", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "certificate", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "certificate", "amount": None},
+            ]
+        },
+        {
+            "division": "Vintage Commercial (Pre 1949)", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "certificate", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "certificate", "amount": None},
+            ]
+        },
+        {
+            "division": "Classic Vehicle (1950 - 1969)", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "certificate", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "certificate", "amount": None},
+            ]
+        },
+        {
+            "division": "Classic Commercial (1950 - 1969)", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "certificate", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "certificate", "amount": None},
+            ]
+        },
+        # Miscellaneous
+        {
+            "division": "Novelty Individual", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "100.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "50.00"},
+            ]
+        },
+        {
+            "division": "Novelty Group", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "100.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "50.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "25.00"},
+            ]
+        },
+        {
+            "division": "Novelty Youth Group", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "200.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "125.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "100.00"},
+            ]
+        },
+        {
+            "division": "Community Performance Group", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "350.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "250.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "150.00"},
+            ]
+        },
+        {
+            "division": "Commercial Open", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "certificate", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "certificate", "amount": None},
+            ]
+        },
+        {
+            "division": "Reenactors", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "plaque", "amount": None},
+                {"name": "2nd Place", "description": "", "award_type": "plaque", "amount": None},
+            ]
+        },
+        {
+            "division": "Fraternal Organizations", 
+            "data": [
+                {"name": "1st Place", "description": "", "award_type": "cash", "amount": "350.00"},
+                {"name": "2nd Place", "description": "", "award_type": "cash", "amount": "250.00"},
+                {"name": "3rd Place", "description": "", "award_type": "cash", "amount": "150.00"},
+            ]
+        },
     ]
     parade = Parade.objects.last()
     for item in data_list:
@@ -245,13 +493,23 @@ def create_awards(qty: int = 1) -> None:
             Award.objects.get_or_create(division=division, name=data["name"], defaults=data)
 
 
+def assign_awards() -> None:
+    parade = Parade.objects.last()
+    participant_ids = []
+    for award in Award.objects.all():
+        print("TEST: ", Participant.objects.exclude(id__in=participant_ids))
+        participant = random.choice(Participant.objects.exclude(id__in=participant_ids))
+        ParticipantAward.objects.create(award=award, parade=parade, winner=participant)
+        participant_ids.append(participant.id)
+
 
 def run():
     print("INFO: creating data...")
     create_parades()
-    create_organizations(qty=20)
+    create_organizations(qty=75)
     create_categories()
     create_divisions()
-    create_parade_participants(qty=30)
+    create_parade_participants(qty=100)
     create_award_types()
     create_awards()
+    assign_awards()

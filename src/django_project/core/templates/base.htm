@@ -2,8 +2,13 @@
 {% load static %}
 
 {% block favicon %}
+<link rel="icon" type="image/png" href="{% static 'paradeplanner/img/favicon.png' %}">
 <title>{{ PROJECT_NAME|title }}</title>
 {% endblock favicon %}
+
+{% block project_theme %}
+<link href="{% static 'paradeplanner/css/main.css' %}" rel="stylesheet">
+{% endblock project_theme %}
 
 {% block project_head_extra %}
 <link href="{% static 'paradeplanner/css/sortable.css' %}" rel="stylesheet">
@@ -27,7 +32,8 @@
 <script>   
     // Listen for the htmx:afterOnLoad event
     document.addEventListener('htmx:afterOnLoad', function(event) {
-      readTable();
+      initializeTables();
+      // readTable();
     });
 </script>
 {% endblock project_javascript_extra %}

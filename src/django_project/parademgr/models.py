@@ -106,6 +106,14 @@ class Parade(HandyHelperBaseModel):
     def __str__(self):
         return f"{self.year} {self.title}"
 
+    def get_awards(self):
+        """ """
+        return ParticipantAward.objects.filter(parade=self).select_related("award", "parade", "winner")
+
+    def get_participants(self):
+        """ """
+        return Participant.objects.filter(parade=self).select_related("division", "organization", "parade")
+
 
 class Category(HandyHelperBaseModel):
     """ """
@@ -142,10 +150,12 @@ class Participant(HandyHelperBaseModel):
     parade = models.ForeignKey("Parade", on_delete=models.CASCADE)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     division = models.ForeignKey("Division", on_delete=models.CASCADE)
-    # participant_id = models.CharField(max_length=32, blank=True)
     entry = models.IntegerField(blank=True, null=True)
     street = models.CharField(max_length=32, null=True)
     march_order = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.organization.name
 
 
 class AwardType(HandyHelperBaseModel):
@@ -161,17 +171,22 @@ class AwardType(HandyHelperBaseModel):
 class Award(HandyHelperBaseModel):
     """ """ 
     award_type = models.ForeignKey("AwardType", on_delete=models.CASCADE)
-    winner = models.ForeignKey("Participant", blank=True, null=True, on_delete=models.CASCADE)
     division = models.ForeignKey("Division", blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=32, blank=True)
     description = models.CharField(max_length=255, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.division} - {self.name}" if self.division else self.name
 
     class Meta:
         unique_together = (("division", "name"), )
+
+
+class ParticipantAward(HandyHelperBaseModel):
+    award = models.ForeignKey("Award", on_delete=models.CASCADE)
+    parade = models.ForeignKey("Parade", on_delete=models.CASCADE)
+    winner = models.ForeignKey("Participant", blank=True, null=True, on_delete=models.CASCADE)
 
 
 # register models with auditlog

@@ -12,7 +12,8 @@ from parademgr.models import (Organization,
                               Division,
                               Participant,
                               AwardType,
-                              Award
+                              Award,
+                              ParticipantAward
                               )
 
 
@@ -83,9 +84,15 @@ class AwardTypeAdmin(admin.ModelAdmin):
 
 
 class AwardAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created_at', 'updated_at', 'award_type', 'winner', 'division', 'name', 'description', 'amount']
+    list_display = ['id', 'created_at', 'updated_at', 'award_type', 'division', 'name', 'description', 'amount']
     search_fields = ['id', 'name', 'description', 'amount']
-    list_filter = ['award_type', 'winner', 'division']
+    list_filter = ['award_type', 'division']
+
+
+class ParticipantAwardAdmin(admin.ModelAdmin):
+    list_display = ['id', 'created_at', 'updated_at', 'award', 'parade', 'winner']
+    search_fields = ['id']
+    list_filter = ['award', 'parade', 'winner']
 
 
 # register models
@@ -101,3 +108,4 @@ admin.site.register(Division, DivisionAdmin)
 admin.site.register(Participant, ParticipantAdmin)
 admin.site.register(AwardType, AwardTypeAdmin)
 admin.site.register(Award, AwardAdmin)
+admin.site.register(ParticipantAward, ParticipantAwardAdmin)

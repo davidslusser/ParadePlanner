@@ -1,20 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const rowsPerPage = 5;
+function readTable() {
+
+    const rowsPerPage = 10;
     let currentPage = 1;
     let currentSortColumn = null;
     let currentSortOrder = true; // true for ascending, false for descending
+    let paginationEnabled = true;
 
     const tableBody = document.querySelector("table tbody");
     const rows = Array.from(tableBody.querySelectorAll("tr"));
     const totalRows = rows.length;
     let sortedRows = rows.slice();
 
+   
     const renderTable = (data, page = 1, rowsPerPage = 5) => {
         tableBody.innerHTML = "";
-        const start = (page - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
-        data.slice(start, end).forEach(row => tableBody.appendChild(row));
-        renderPagination(data.length, page, rowsPerPage);
+        
+        if (paginationEnabled) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            data.slice(start, end).forEach(row => tableBody.appendChild(row));
+            renderPagination(data.length, page, rowsPerPage);
+            document.getElementById("paginationNav").style.display = 'block';
+        } else {
+            data.forEach(row => tableBody.appendChild(row));
+            document.getElementById("paginationNav").style.display = 'none';
+        }
     };
 
     const renderPagination = (totalRows, page, rowsPerPage) => {
@@ -74,5 +84,36 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTable(sortedRows, currentPage, rowsPerPage);
     }));
 
+    document.getElementById("paginationToggle").addEventListener("click", () => {
+        paginationEnabled = !paginationEnabled;
+        document.getElementById("paginationToggle").classList.toggle('disabled', !paginationEnabled);
+        renderTable(sortedRows, currentPage, rowsPerPage);
+    });
+
     renderTable(sortedRows, currentPage, rowsPerPage);
+
+}
+
+
+function updateColspan(tableId) {
+    const table = document.getElementById(tableId);
+    if (!table) {
+        console.error(`Table with id "${tableId}" not found.`);
+        return;
+    }
+
+    const headerCells = table.querySelectorAll("thead th");
+    const spanningRow = table.querySelector(".spanning-row td");
+
+    if (spanningRow) {
+        // Set the colspan attribute to the number of header cells
+        spanningRow.colSpan = headerCells.length;
+    } else {
+        console.error(`Spanning row not found in table with id "${tableId}".`);
+    }
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    readTable();
 });
