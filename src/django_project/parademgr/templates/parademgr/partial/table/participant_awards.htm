@@ -14,12 +14,12 @@
     {% if queryset %}
     {% for row in queryset %}
         <tr>
-            <td>{{ row.division.category }}</td>
-            <td>{{ row.division }}</td>
-            <td>{{ row.name }}</td>
-            <td>{{ row.description }}</td>
-            <td>{{ row.award_type }}</td>
-            <td>{% if amount %}{{ row.amount }}{% endif %}</td>
+            <td>{{ row.award.division.category }}</td>
+            <td>{{ row.award.division }}</td>
+            <td>{{ row.award.name }}</td>
+            <td>{{ row.award.description }}</td>
+            <td>{{ row.award.award_type }}</td>
+            <td>{% if amount %}{{ row.award.amount }}{% endif %}</td>
             <td></td>
         </tr>
     {% endfor %}

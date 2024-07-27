@@ -1,50 +1,30 @@
-<div class="container-fluid px-5 py-2">
-    {% if title %}
-    <div class="h2 text-primary fw-bold my-3">{{ title }}: 
-        <span class="h4 text-secondary mx-2">{% if subtitle %}{{ subtitle }}{% endif %}</span>
-    </div>
+<table class="table table-condensed table-bordered table-striped mt-3">
+    <thead>
+        <tr>
+            <th class="sortable">Organization <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+            <th class="sortable">Category <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+            <th class="sortable">Division <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+            <th class="sortable">Entry <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+            <th class="sortable">March Order <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+            <th class="sortable">Street <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if queryset %}
+    {% for row in queryset %}
+        <tr>
+            <td><a href="" hx-get="{% url 'parademgr:detail_organization' row.pk %}" hx-target="#body_main" hx-push-url="true">{{ row.organization.name }}</a></td>
+            <td>{{ row.division.category.name }}</td>
+            <td>{{ row.division }}</td>
+            <td>{{ row.entry }}</td>
+            <td>{{ row.march_order }}</td>
+            <td>{{ row.street }}</td>
+            <td></td>
+        </tr>
+    {% endfor %}
+    {% else %}
+        <tr><td colspan="7" class="spanning-row text-center">No matching records found</td></tr>
     {% endif %}
-    
-    <div class="sortable-table-wrapper">
-        <div class="d-flex justify-content-end mb-3">
-            {% if queryset %}<i class="pagination-toggle text-primary fa-solid fa-square-caret-down"></i>{% endif %}
-        </div>
-
-        <table id="participantsTable" class="table table-condensed table-bordered table-striped mt-3">
-            <thead>
-                <tr>
-                    <th class="sortable">Organization <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
-                    <th class="sortable">Category <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
-                    <th class="sortable">Division <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
-                    <th class="sortable">Entry <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
-                    <th class="sortable">March Order <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
-                    <th class="sortable">Street <i class="fa fa-sortable fa-sort-up"></i><i class="fa fa-sortable fa-sort-down"></i></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            {% if queryset %}
-            {% for row in queryset %}
-                <tr>
-                    <td><a href="" hx-get="{% url 'parademgr:detail_organization' row.pk %}" hx-target="#body_main" hx-push-url="true">{{ row.organization.name }}</a></td>
-                    <td>{{ row.division.category.name }}</td>
-                    <td>{{ row.division }}</td>
-                    <td>{{ row.entry }}</td>
-                    <td>{{ row.march_order }}</td>
-                    <td>{{ row.street }}</td>
-                    <td></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-                <tr><td colspan="7" class="spanning-row text-center">No matching records found</td></tr>
-            {% endif %}
-            </tbody>
-        </table>
-
-        {% if queryset %}
-        <nav id="participantsTableNav" class="sortable-table-nav">
-            <ul class="pagination justify-content-end"><!-- Pagination will be inserted here by JavaScript --></ul>
-        </nav>
-        {% endif %}
-    </div>
-</div>
+    </tbody>
+    </table>

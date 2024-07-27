@@ -20,6 +20,9 @@ class Organization(HandyHelperBaseModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Organizations"
+
 
 class Contact(HandyHelperBaseModel):
     """ """
@@ -106,13 +109,17 @@ class Parade(HandyHelperBaseModel):
     def __str__(self):
         return f"{self.year} {self.title}"
 
+    # class Meta:
+    #     verbose_name_plural = "Parades"
+
     def get_awards(self):
         """ """
-        return ParticipantAward.objects.filter(parade=self).select_related("award", "parade", "winner")
+        return ParticipantAward.objects.filter(parade=self).select_related("award", "award__division", "award__division__category", "award__award_type", "parade", "winner")
+
 
     def get_participants(self):
         """ """
-        return Participant.objects.filter(parade=self).select_related("division", "organization", "parade")
+        return Participant.objects.filter(parade=self).select_related("division", "division__category", "organization", "parade")
 
 
 class Category(HandyHelperBaseModel):

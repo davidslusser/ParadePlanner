@@ -11038,3 +11038,9 @@ textarea.form-control-lg {
     display: none !important; } }
 
 /*# sourceMappingURL=main.css.map */
+
+
+#body_main {
+  height: 88vh; /* 80% of the viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}

@@ -15,11 +15,3 @@ th.sortable .fa-sortable {
 th.sortable:hover .fa-sortable {
     visibility: visible;
 }
-#paginationToggle {
-    cursor: pointer;
-    font-size: 1.5em;
-    color: var(--bs-primary);
-}
-#paginationToggle.disabled {
-    color: var(--bs-secondary);
-}

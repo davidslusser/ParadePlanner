@@ -1,5 +1,12 @@
 function readTable(table) {
-    const rowsPerPage = 10;
+    // const rowsPerPage = 15;
+
+    var sortableTableWrapper = document.querySelector('.sortable-table-wrapper');
+    // Get the value of the data-pagination-size attribute
+    var paginationSize = sortableTableWrapper.getAttribute('data-pagination-size');
+    // Convert the pagination size to an integer
+    const rowsPerPage = parseInt(paginationSize, 10);
+
     let currentPage = 1;
     let currentSortColumn = null;
     let currentSortOrder = true; // true for ascending, false for descending
@@ -15,13 +22,17 @@ function readTable(table) {
     const renderTable = (data, page = 1, rowsPerPage = rowsPerPage) => {
         tableBody.innerHTML = "";
 
+        const navElement = table.closest('.sortable-table-wrapper').querySelector(".sortable-table-nav");
+
         if (paginationEnabled) {
             const start = (page - 1) * rowsPerPage;
             const end = start + rowsPerPage;
             data.slice(start, end).forEach(row => tableBody.appendChild(row));
             renderPagination(data.length, page, rowsPerPage, table);
+            if (navElement) navElement.style.display = 'block';
         } else {
             data.forEach(row => tableBody.appendChild(row));
+            if (navElement) navElement.style.display = 'none';
         }
     };
 
@@ -89,7 +100,7 @@ function readTable(table) {
         paginationToggle.addEventListener("click", () => {
             paginationEnabled = !paginationEnabled;
             paginationToggle.classList.toggle('disabled', !paginationEnabled);
-            paginationToggle.style.color = paginationEnabled ? 'black' : 'gray';
+            paginationToggle.style.color = paginationEnabled ? 'var(--bs-parimary)' : 'var(--bs-secondary)';
             renderTable(sortedRows, currentPage, rowsPerPage);
         });
     }

@@ -51,51 +51,44 @@ class DetailOrganization(HtmxOptionDetailView):
     template_name = "parademgr/full/detail/organization.html"
 
 
-
-
 class ListAwards(HtmxOptionMultiView):
     """list available Award entries"""
-    queryset = Award.objects.all()
-    title = "Awards"
+    queryset = Award.objects.all().select_related("division", "division__category")
+    model = Award
     htmx_table_template_name = "parademgr/partial/table/awards.htm"
     template_name = "parademgr/full/list/awards.html"
 
 
 class ListAwardTypes(HtmxOptionMultiView):
     """list available AwardType entries"""
-    queryset = AwardType.objects.all()
-    title = "AwardType"
+    model = AwardType
     htmx_table_template_name = "parademgr/partial/table/award_types.htm"
     template_name = "parademgr/full/list/award_types.html"
 
 
 class ListCategories(HtmxOptionMultiView):
     """list available Category entries"""
-    queryset = Category.objects.all()
-    title = "Category"
+    model = Category
     htmx_table_template_name = "parademgr/partial/table/categories.htm"
     template_name = "parademgr/full/list/categories.html"
 
 
 class ListDivisions(HtmxOptionMultiView):
     """list available Division entries"""
-    queryset = Division.objects.all()
-    title = "Division"
+    model = Division
     htmx_table_template_name = "parademgr/partial/table/divisions.htm"
     template_name = "parademgr/full/list/divisions.html"
 
 
 class ListOrganizations(HtmxOptionMultiView):
     """list available Organization entries"""
-    queryset = Organization.objects.all()
-    title = "Organizations"
+    model = Organization
     htmx_table_template_name = "parademgr/partial/table/organizations.htm"
     template_name = "parademgr/full/list/organizations.html"
 
 
 class ListParades(HtmxOptionMultiView):
     """list available Parade entries"""
-    queryset = Parade.objects.all()
-    title = "Parades"
-    htmx_table_template_name = "parademgr/partial/table/parades.htm"
+    model = Parade
+    htmx_table_template_name ="parademgr/partial/table/parades.htm"
     template_name = "parademgr/full/list/parades.html"
