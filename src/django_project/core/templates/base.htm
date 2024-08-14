@@ -11,7 +11,7 @@
 {% endblock project_theme %}
 
 {% block project_head_extra %}
-<link href="{% static 'paradeplanner/css/sortable.css' %}" rel="stylesheet">
+<link href="{% static 'handyhelpers/css/table_sortable.css' %}" rel="stylesheet">
 {% endblock project_head_extra %}
 
 {% block sidebar %}
@@ -27,13 +27,12 @@
 {% endblock mainfooter%}
 
 {% block project_javascript_extra %}
-<script type="text/javascript" src="{% static 'paradeplanner/js/sortable.js' %}"></script>
+<script type="text/javascript" src="{% static 'handyhelpers/js/table_sortable.js' %}"></script>
 
 <script>   
     // Listen for the htmx:afterOnLoad event
     document.addEventListener('htmx:afterOnLoad', function(event) {
       initializeTables();
-      // readTable();
     });
 </script>
 {% endblock project_javascript_extra %}

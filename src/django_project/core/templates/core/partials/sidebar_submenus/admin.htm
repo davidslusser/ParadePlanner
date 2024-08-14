@@ -5,8 +5,16 @@
     </a>
     <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
         <li class="sidebar-link">
-            <a href="/admin" class="sidebar-link ms-4">Django Admin</a>
+            <a hx-get="{% url 'parademgr:admin' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Parade Planner Admin</a>
         </li>
+        <li class="sidebar-link">
+            <a href="/admin" class="sidebar-link ms-4">Django Console</a>
+        </li>
+
+        <li class="sidebar-link">
+            <a hx-get="{% url 'parademgr:list_awards' display='table' %}" class="sidebar-link ms-4" hx-target="#body_main" hx-push-url="true">Awards</a>
+        </li>
+
         <!-- <li class="sidebar-link">
             <a href="{% url 'pygwalker:' %}" class="sidebar-link ms-4">Pywalker</a>
         </li> -->

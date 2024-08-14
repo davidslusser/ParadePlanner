@@ -1,5 +1,5 @@
 <section class="animated fadeIn" style="animation-delay: .15s;">
-    <header class="m-5">
+    <header class="m-2">
         <div class="headline text-center">
             <div class="container">
                 <div class="h1 text-primary fw-bold mb-3">{{ object.year }}</div>
@@ -7,10 +7,8 @@
             </div>
         </div>
     </header>
-</section>
 
-<section>
-    <div class="container-fluid my-5 animated fadeIn" style="animation-delay: .25s;">
+    <div class="container-fluid my-3 animated fadeIn" style="animation-delay: .25s;">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#participants" type="button" role="tab" aria-controls="participants" aria-selected="true">Participants</button>
@@ -23,14 +21,14 @@
             <div class="tab-pane fade show active" id="participants" role="tabpanel" aria-labelledby="participants-tab">
                 {% with object.get_participants as queryset %}
                 {% with 'parademgr/partial/table/participants.htm' as table %}
-                {% include 'parademgr/partial/component/table_wrapper.htm' %}
+                {% include 'handyhelpers/htmx/bs5/table_wrapper.htm' %}
                 {% endwith %}
                 {% endwith %}
             </div>
             <div class="tab-pane fade" id="awards" role="tabpanel" aria-labelledby="awards-tab">
               {% with object.get_awards as queryset %}
               {% with 'parademgr/partial/table/participant_awards.htm' as table %}
-              {% include 'parademgr/partial/component/table_wrapper.htm' %}
+              {% include 'handyhelpers/htmx/bs5/table_wrapper.htm' %}
               {% endwith %}
               {% endwith %}
             </div>

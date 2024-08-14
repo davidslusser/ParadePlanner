@@ -134,6 +134,7 @@ class Category(HandyHelperBaseModel):
 
     class Meta:
         ordering = ['name', 'label']
+        verbose_name_plural = "Categories"
 
 
 class Division(HandyHelperBaseModel):

@@ -11040,7 +11040,7 @@ textarea.form-control-lg {
 /*# sourceMappingURL=main.css.map */
 
 
-#body_main {
-  height: 88vh; /* 80% of the viewport height */
+#body_main > section:first-of-type {
+  height: 85vh; /* 88% of the viewport height */
   overflow-y: auto; /* Enable vertical scrolling */
 }

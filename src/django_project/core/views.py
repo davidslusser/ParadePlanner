@@ -16,14 +16,20 @@ class RegisterUser(CreateView):
 class Index(HandyHelperIndexView):
     """render the project index page"""
 
-    title = """Welcome to <span class="text-primary">paradeplanner</span><span class="text-secondary"></span>!"""
+    title = """Welcome to <span class="text-primary">Parade Planner</span><span class="text-secondary"></span>!"""
     subtitle = "Select an option below to get started"
     item_list = [
         {
             "url": "/dashboard",
             "icon": "fas fa-tachometer-alt",
             "title": "Dashboard",
-            "description": "View paradeplanner dashboard",
+            "description": "View Parade Planner dashboard",
+        },
+        {
+            "url": "/rest",
+            "icon": "fa-solid fa-id-card-clip",
+            "title": "Admin",
+            "description": "Parade Planner administor page",
         },
         {
             "url": "/rest",

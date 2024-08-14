@@ -1,0 +1,23 @@
+<section>
+    {% include 'handyhelpers/htmx/bs5/content_title.htm' %}
+
+    <div class="container-fluid px-5 py-2 animated fadeIn" style="animation-delay: .2s;">
+        <ul>
+            {% for row in queryset %}
+            <li class="list-group-item bg-light-subtle shadow-sm my-3 me-4 py-2 px-3 hvr-grow d-flex">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 text-start">{{ row }}</div>
+                        <div class="col-6 text-end">
+                            <span class="mx-1"><i class="fa-solid fa-phone"></i></span>
+                            <span class="mx-1"><i class="fa-solid fa-envelope"></i></span>
+                            <span class="mx-1"><i class="fa-solid fa-link"></i></span>
+                            <span class="mx-1"><i class="fa-solid fa-address-book"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>

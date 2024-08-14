@@ -273,14 +273,14 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "parader APIs",
-    "DESCRIPTION": "RESTful APIs for parader",
+    "TITLE": "Parade Planner APIs",
+    "DESCRIPTION": "RESTful APIs for Parade Planner",
     "VERSION": "1.0.0",
 }
 
-PROJECT_NAME = "parader"
+PROJECT_NAME = "Parade Planner"
 PROJECT_DESCRIPTION = (
-    """Parader is a parade management platform """
+    """Parade Planner is a parade management platform """
 )
 PROJECT_VERSION = env.str("PROJECT_VERSION", "")
 # PROJECT_SOURCE = "https://github.com/djangoaddicts"

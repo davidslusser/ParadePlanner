@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.views.generic import DetailView, View, TemplateView
 
 from handyhelpers.permissions import InAnyGroup
 from handyhelpers.views import HandyHelperIndexView, HandyHelperListPlusCreateAndFilterView
-from handyhelpers.views.htmx import HtmxOptionMultiView, HtmxOptionDetailView
+from handyhelpers.views.htmx import (HtmxOptionMultiView, HtmxOptionDetailView, HtmxOptionMultiFilterView, HtmxItemizedView)
 
 # import models
 from parademgr.models import (Award, AwardType, Category, Division, Organization, Parade)
@@ -12,31 +12,47 @@ from parademgr.models import (Award, AwardType, Category, Division, Organization
 # from parademgr.forms import ()
 
 
-class Test(TemplateView):
-    template_name = "parademgr/full/custom/test.html"
+class Admin(HtmxItemizedView):
+    """render the project index page"""
 
-
-class Index(HandyHelperIndexView):
-    """render the parademgr index page"""
-
-    title = """Parademgr"""
+    title = """<span class="text-primary">Parade Planner</span> <span class="text-secondary">Admin</span>"""
     subtitle = "Select an option below"
     item_list = [
         {
-            "url": "/parademgr/dashboard",
-            "icon": "fas fa-tachometer-alt",
-            "title": "Dashboard",
-            "description": "Dashboard for Parademgr ",
+            "url": "/dashboard",
+            "icon": "fa-regular fa-map",
+            "title": "Create Parade",
+            "description": "Create a new parade",
         },
         {
-            "url": "/parademgr/rest",
-            "icon": "fas fa-download",
-            "title": "APIs",
-            "description": "List RESTful APIs for Parademgr",
+            "url": "/rest",
+            "icon": "fa-solid fa-award",
+            "title": "Add Award",
+            "description": "Add a new award",
+        },
+        {
+            "url": "/rest",
+            "icon": "fa-solid fa-certificate",
+            "title": "Add Award Type",
+            "description": "Add a new reward type",
+        },
+        {
+            "url": "/rest",
+            "icon": "fas fa-table-list",
+            "title": "Add Category",
+            "description": "Add a new parade category",
+        },
+        {
+            "url": "/rest",
+            "icon": "fa-solid fa-users-rectangle",
+            "title": "Add Division",
+            "description": "Add a new parade division",
         },
     ]
-    protected_item_list = []
-    protected_group_name = "admin"
+
+
+class Test(TemplateView):
+    template_name = "parademgr/full/custom/test.html"
 
 
 class DetailParade(HtmxOptionDetailView):
@@ -51,7 +67,7 @@ class DetailOrganization(HtmxOptionDetailView):
     template_name = "parademgr/full/detail/organization.html"
 
 
-class ListAwards(HtmxOptionMultiView):
+class ListAwards(HtmxOptionMultiFilterView):
     """list available Award entries"""
     queryset = Award.objects.all().select_related("division", "division__category")
     model = Award
@@ -59,35 +75,36 @@ class ListAwards(HtmxOptionMultiView):
     template_name = "parademgr/full/list/awards.html"
 
 
-class ListAwardTypes(HtmxOptionMultiView):
+class ListAwardTypes(HtmxOptionMultiFilterView):
     """list available AwardType entries"""
     model = AwardType
     htmx_table_template_name = "parademgr/partial/table/award_types.htm"
     template_name = "parademgr/full/list/award_types.html"
 
 
-class ListCategories(HtmxOptionMultiView):
+class ListCategories(HtmxOptionMultiFilterView):
     """list available Category entries"""
     model = Category
     htmx_table_template_name = "parademgr/partial/table/categories.htm"
     template_name = "parademgr/full/list/categories.html"
 
 
-class ListDivisions(HtmxOptionMultiView):
+class ListDivisions(HtmxOptionMultiFilterView):
     """list available Division entries"""
     model = Division
     htmx_table_template_name = "parademgr/partial/table/divisions.htm"
     template_name = "parademgr/full/list/divisions.html"
 
 
-class ListOrganizations(HtmxOptionMultiView):
+class ListOrganizations(HtmxOptionMultiFilterView):
     """list available Organization entries"""
     model = Organization
+    # htmx_list_template_name = "parademgr/partial/list/organizations.htm"
     htmx_table_template_name = "parademgr/partial/table/organizations.htm"
     template_name = "parademgr/full/list/organizations.html"
 
 
-class ListParades(HtmxOptionMultiView):
+class ListParades(HtmxOptionMultiFilterView):
     """list available Parade entries"""
     model = Parade
     htmx_table_template_name ="parademgr/partial/table/parades.htm"

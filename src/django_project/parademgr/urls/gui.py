@@ -5,12 +5,14 @@ from parademgr.views import report
 
 urlpatterns = [
     # GUI views
-    path("", gui.Index.as_view(), name=""),
-    path("index", gui.Index.as_view(), name="index"),
-    path("default", gui.Index.as_view(), name="default"),
-    path("home", gui.Index.as_view(), name="home"),
+    # path("", gui.Index.as_view(), name=""),
+    # path("index", gui.Index.as_view(), name="index"),
+    # path("default", gui.Index.as_view(), name="default"),
+    # path("home", gui.Index.as_view(), name="home"),
     # list views
     # path("list_mymodels/", gui.ListMymodels.as_view(), name="list_mymodels"),
+
+    path("admin/", gui.Admin.as_view(), name="admin"),
 
     re_path("^awards/(?P<display>\w+)?/$", gui.ListAwards.as_view(), name="list_awards"),
     path("awards/", gui.ListAwards.as_view(), name="awards"),
@@ -25,11 +27,10 @@ urlpatterns = [
     path("divisions/", gui.ListDivisions.as_view(), name="divisions"),
 
     re_path("^organizations/(?P<display>\w+)?/$", gui.ListOrganizations.as_view(), name="list_organizations"),
-    path("organizations/", gui.ListOrganizations.as_view(), name="parades"),
+    path("organizations/", gui.ListOrganizations.as_view(), name="organizations"),
 
     re_path("^parades/(?P<display>\w+)?/$", gui.ListParades.as_view(), name="list_parades"),
-    path("parades/", gui.ListParades.as_view(), name="parades"),
-
+    path("parades/", gui.ListParades.as_view(), name="list_parades"),
 
     # detail views
     # path("detail_mymodel/<int:pk>", gui.DetailMymodel.as_view(), name="detail_mymodel"),
