@@ -1,0 +1,14 @@
+{% extends BASE_TEMPLATE|default:"base.htm" %}
+{% load static %}
+
+{% block content %}
+    {% if request.is_htmx %}
+    <div 
+    hx-get="{% url 'parademgr:admin' %}" 
+    hx-trigger="load"
+    ></div>
+    {% else %}
+    <div>{% include 'parademgr/partial/component/admin.htm' %}</div>
+    {% endif %}
+
+{% endblock content %}

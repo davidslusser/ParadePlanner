@@ -21,19 +21,19 @@ class Index(HandyHelperIndexView):
     item_list = [
         {
             "url": "/dashboard",
-            "icon": "fas fa-tachometer-alt",
+            "icon": """<i class="fa-solid fa-gauge-high"></i>""",
             "title": "Dashboard",
             "description": "View Parade Planner dashboard",
         },
         {
-            "url": "/rest",
-            "icon": "fa-solid fa-id-card-clip",
+            "url": "/parademgr/admin",
+            "icon": """<i class="fa-solid fa-id-card-clip"></i>""",
             "title": "Admin",
             "description": "Parade Planner administor page",
         },
         {
             "url": "/rest",
-            "icon": "fas fa-download",
+            "icon": """<i class="fa-solid fa-arrow-right-arrow-left"></i>""",
             "title": "APIs",
             "description": "List available RESTful APIs",
         },
@@ -41,9 +41,9 @@ class Index(HandyHelperIndexView):
     protected_item_list = [
         {
             "url": "/admin",
-            "icon": "fab fa-python",
+            "icon": """<i class="fa-brands fa-python"></i>""",
             "title": "Django Console",
-            "description": "Access the django administrator console",
+            "description": "Access the django console",
         },
     ]
     protected_group_name = "admin"

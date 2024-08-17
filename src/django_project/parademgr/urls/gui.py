@@ -14,6 +14,7 @@ urlpatterns = [
 
     path("admin/", gui.Admin.as_view(), name="admin"),
 
+    # list views
     re_path("^awards/(?P<display>\w+)?/$", gui.ListAwards.as_view(), name="list_awards"),
     path("awards/", gui.ListAwards.as_view(), name="awards"),
 
@@ -36,6 +37,14 @@ urlpatterns = [
     # path("detail_mymodel/<int:pk>", gui.DetailMymodel.as_view(), name="detail_mymodel"),
     path("parades/<int:pk>", gui.DetailParade.as_view(), name="detail_parade"),
     path("organizations/<int:pk>", gui.DetailOrganization.as_view(), name="detail_organization"),
+
+
+    # hmtx partials (modals)
+    path("create_award/", gui.CreateAwardModalView.as_view(), name="create_award"),
+    path("create_awardtype/", gui.CreateAwardTypeModalView.as_view(), name="create_awardtype"),
+    path("create_category/", gui.CreateCategoryModalView.as_view(), name="create_category"),
+    path("create_division/", gui.CreateDivisionModalView.as_view(), name="create_division"),
+    path("create_parade/", gui.CreateParadeModalView.as_view(), name="create_parade"),
 
 
     # report views
