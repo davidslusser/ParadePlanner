@@ -6,6 +6,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 
+from parademgr.fields import UsPhoneNumberField
+
 
 class Organization(HandyHelperBaseModel):
     """ """
@@ -64,7 +66,7 @@ class PhoneNumber(HandyHelperBaseModel):
         ("Other", "Other"),
     ]
 
-    number = PhoneNumberField(null=False, blank=False, unique=True)
+    number = UsPhoneNumberField(null=False, blank=False, unique=True)
     phone_type = models.CharField(max_length=16, blank=True, choices=phone_type_choices)
 
     def __str__(self):
