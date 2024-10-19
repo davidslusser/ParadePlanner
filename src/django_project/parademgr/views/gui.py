@@ -4,13 +4,14 @@ from django.http import HttpResponse
 
 from handyhelpers.permissions import InAnyGroup
 from handyhelpers.views import HandyHelperIndexView, HandyHelperListPlusCreateAndFilterView
-from handyhelpers.views.htmx import (HtmxOptionMultiView, HtmxOptionDetailView, HtmxOptionMultiFilterView, HtmxItemizedView, HtmxPostForm, BuildBootstrapModalView, CreateModelModalView)
+from handyhelpers.views.htmx import (HtmxOptionMultiView, HtmxOptionDetailView, HtmxOptionMultiFilterView, HtmxItemizedView, HtmxPostForm, BuildBootstrapModalView, CreateModelModalView, HtmxFilterModalView)
 
 # import models
 from parademgr.models import (Award, AwardType, Category, Division, Organization, Parade)
 
 # import forms
 from parademgr.forms.create import (AwardForm, AwardTypeForm, CategoryForm, DivisionForm, OrganizationForm, ParadeForm)
+from parademgr.forms.filter_forms import (AwardFilterForm, DivisionFilterForm, OrganizationFilterForm)
 
 
 class Admin(HtmxItemizedView):
@@ -60,6 +61,7 @@ class Test(TemplateView):
 
 class DetailParade(HtmxOptionDetailView):
     model = Parade
+    initialize_tables = True
     htmx_template_name = "parademgr/partial/detail/parade.htm"
     template_name = "parademgr/full/detail/parade.html"
 
@@ -72,46 +74,46 @@ class DetailOrganization(HtmxOptionDetailView):
 
 class ListAwards(HtmxOptionMultiFilterView):
     """list available Award entries"""
-    queryset = Award.objects.all().select_related("division", "division__category")
+    filter_form = AwardFilterForm
     model = Award
+    queryset = Award.objects.all().select_related("division", "division__category")
+    htmx_card_template_name = "parademgr/partial/card/awards.htm"
     htmx_table_template_name = "parademgr/partial/table/awards.htm"
-    template_name = "parademgr/full/list/awards.html"
 
 
 class ListAwardTypes(HtmxOptionMultiFilterView):
     """list available AwardType entries"""
     model = AwardType
+    queryset = AwardType.objects.all()
     htmx_table_template_name = "parademgr/partial/table/award_types.htm"
-    template_name = "parademgr/full/list/award_types.html"
 
 
 class ListCategories(HtmxOptionMultiFilterView):
     """list available Category entries"""
     model = Category
     htmx_table_template_name = "parademgr/partial/table/categories.htm"
-    template_name = "parademgr/full/list/categories.html"
 
 
 class ListDivisions(HtmxOptionMultiFilterView):
     """list available Division entries"""
+    filter_form = DivisionFilterForm
     model = Division
+    queryset = Division.objects.all().select_related("category")
     htmx_table_template_name = "parademgr/partial/table/divisions.htm"
-    template_name = "parademgr/full/list/divisions.html"
 
 
 class ListOrganizations(HtmxOptionMultiFilterView):
     """list available Organization entries"""
+    filter_form = OrganizationFilterForm
     model = Organization
     # htmx_list_template_name = "parademgr/partial/list/organizations.htm"
     htmx_table_template_name = "parademgr/partial/table/organizations.htm"
-    template_name = "parademgr/full/list/organizations.html"
 
 
 class ListParades(HtmxOptionMultiFilterView):
     """list available Parade entries"""
     model = Parade
     htmx_table_template_name ="parademgr/partial/table/parades.htm"
-    template_name = "parademgr/full/list/parades.html"
 
 
 class CreateAwardModalView(CreateModelModalView):
@@ -142,3 +144,18 @@ class CreateOrganization(CreateModelModalView):
 class CreateParadeModalView(CreateModelModalView):
     """Create a new Parade entry"""
     form = ParadeForm
+
+
+class FilterAwardModalView(HtmxFilterModalView):
+    """Create a new Award entry"""
+    form = AwardFilterForm
+
+
+class FilterDivisionModalView(HtmxFilterModalView):
+    """Create a new Division entry"""
+    form = DivisionFilterForm
+
+
+class FilterOrganizationModalView(HtmxFilterModalView):
+    """Create a new Organization entry"""
+    form = OrganizationFilterForm

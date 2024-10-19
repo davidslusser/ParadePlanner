@@ -1,3 +1,4 @@
+{{ form }}
 <table class="table table-condensed table-bordered table-striped mt-3">
     <thead>
         <tr>
@@ -20,7 +21,11 @@
             <td>{{ row.description }}</td>
             <td>{{ row.award_type }}</td>
             <td>{% if amount %}{{ row.amount }}{% endif %}</td>
-            <td></td>
+            <td>
+                <a href="#" hx-get="/handyhelpers/about" hx-target="#modal_wrapper" data-bs-toggle="modal" data-bs-target="#modal_wrapper">
+                    <i class="fa fa-info-circle fw"></i>
+                </a>
+            </td>
         </tr>
     {% endfor %}
     {% else %}

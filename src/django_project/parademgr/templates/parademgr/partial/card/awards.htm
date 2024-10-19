@@ -1,0 +1,21 @@
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        {% for row in queryset %}
+        <div class="col-sm-12 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 hvr-grow">
+                <div class="card-body">
+                    <div class="card-title mb-1">
+                        <span class="text-primary fs-6 fw-bold">{{ row.name }}</span>
+                        <span class="text-secondary small fw-normal ms-2">({{ row.award_type }})</span>
+                    </div>
+                    <div class="card-text text-secondary row" style="font-size: smaller;">
+                        <div class="col-12">{{ row.division }}</div>
+                        <div class="col-12">{{ row.description }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

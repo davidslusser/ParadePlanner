@@ -31,10 +31,4 @@
 {% block project_javascript_extra %}
 <script type="text/javascript" src="{% static 'handyhelpers/js/table_sortable.js' %}"></script>
 
-<script>   
-    // Listen for the htmx:afterOnLoad event
-    document.addEventListener('htmx:afterOnLoad', function(event) {
-      initializeTables();
-    });
-</script>
 {% endblock project_javascript_extra %}
