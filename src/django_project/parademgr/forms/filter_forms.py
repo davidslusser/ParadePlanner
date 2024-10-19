@@ -2,14 +2,14 @@ from django import forms
 from handyhelpers.forms import HtmxForm
 
 # import models
-from parademgr.models import (Award, AwardType, Category, Division, Organization, Parade)
-
+from parademgr.models import AwardType, Category, Division
 
 base_choices = [(None, "--------")]
 
 
 class AwardFilterForm(HtmxForm):
     """ """
+
     modal_url = "/parademgr/awards/filter/"
     hx_post_url = "/parademgr/awards/"
 

@@ -3,12 +3,15 @@
 # from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import View
-from handyhelpers.views.report import AnnualTrendView, AnnualStatView, AnnualProgressView
-
-# from handyhelpers.views.report import get_colors
+from handyhelpers.views.report import (
+    AnnualProgressView,
+    AnnualStatView,
+    AnnualTrendView,
+)
 
 # import models
-from parademgr.models import (Award, Organization, Parade)
+
+# from handyhelpers.views.report import get_colors
 
 
 class ParademgrDashboard(View):
@@ -25,7 +28,7 @@ class ParademgrDashboard(View):
 class ParademgrAnnualProgressView(AnnualProgressView):
     """ """
 
-    dataset_list = [
+    dataset_list: list = [
         # dict(
         #     title="Model",
         #     queryset=Model.objects.all(),
@@ -39,7 +42,7 @@ class ParademgrAnnualProgressView(AnnualProgressView):
 class ParademgrAnnualStatView(AnnualStatView):
     """ """
 
-    dataset_list = [
+    dataset_list: list = [
         # dict(
         #     title="Model",
         #     queryset=Model.objects.all(),
@@ -53,7 +56,7 @@ class ParademgrAnnualStatView(AnnualStatView):
 class ParademgrAnnualTrendView(AnnualTrendView):
     """ """
 
-    dataset_list = [
+    dataset_list: list = [
         # dict(
         #     title="Model",
         #     queryset=Model.objects.all(),

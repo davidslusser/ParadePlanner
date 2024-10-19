@@ -50,8 +50,13 @@ dev = [
 
 
 [tool.bandit]
-exclude_dirs = ["venv", "django_project/tests", "django_project/*/management/commands"]
-
+exclude_dirs = [
+    "venv",
+    "local_test",
+    "django_project/tests", 
+    "django_project/*/management/commands"
+    ]
+skips = ["B311"]
 
 [tool.black]
 line-length = 120
@@ -78,8 +83,14 @@ profile = "black"
 
 
 [tool.mypy]
-exclude = ["venv/*", "^django_project/*/migrations/*"]
+exclude = [
+    "venv/*",
+    "local_test/*",
+    "migrations/*",
+    "admin.py"
+]
 ignore_missing_imports = true
+
 
 
 [tool.pytest.ini_options]

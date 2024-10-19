@@ -1,16 +1,13 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.urls import reverse
-from auditlog.registry import auditlog
-from handyhelpers.models import HandyHelperBaseModel
-from phonenumber_field.modelfields import PhoneNumberField
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
-
+from handyhelpers.models import HandyHelperBaseModel
 from parademgr.fields import UsPhoneNumberField
 
 
 class Organization(HandyHelperBaseModel):
     """ """
+
     name = models.CharField(max_length=64, unique=True)
     description = models.CharField(max_length=255, blank=True)
     phone_numbers = models.ManyToManyField("PhoneNumber", blank=True)
@@ -28,6 +25,7 @@ class Organization(HandyHelperBaseModel):
 
 class Contact(HandyHelperBaseModel):
     """ """
+
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     phone_numbers = models.ManyToManyField("PhoneNumber", blank=True)
@@ -98,14 +96,11 @@ class Link(HandyHelperBaseModel):
 
 class Parade(HandyHelperBaseModel):
     """ """
+
     current_year = timezone.datetime.now().year
     title = models.CharField(max_length=64, blank=True)
     year = models.IntegerField(
-        validators=[
-            MinValueValidator(2000),
-            MaxValueValidator(current_year + 5)
-        ],
-        help_text="Enter a valid year"
+        validators=[MinValueValidator(2000), MaxValueValidator(current_year + 5)], help_text="Enter a valid year"
     )
 
     def __str__(self):
@@ -116,16 +111,20 @@ class Parade(HandyHelperBaseModel):
 
     def get_awards(self):
         """ """
-        return ParticipantAward.objects.filter(parade=self).select_related("award", "award__division", "award__division__category", "award__award_type", "parade", "winner")
-
+        return ParticipantAward.objects.filter(parade=self).select_related(
+            "award", "award__division", "award__division__category", "award__award_type", "parade", "winner"
+        )
 
     def get_participants(self):
         """ """
-        return Participant.objects.filter(parade=self).select_related("division", "division__category", "organization", "parade")
+        return Participant.objects.filter(parade=self).select_related(
+            "division", "division__category", "organization", "parade"
+        )
 
 
 class Category(HandyHelperBaseModel):
     """ """
+
     name = models.CharField(max_length=32, unique=True)
     label = models.CharField(max_length=2, unique=True)
     description = models.CharField(max_length=255, blank=True)
@@ -135,12 +134,13 @@ class Category(HandyHelperBaseModel):
         return self.name
 
     class Meta:
-        ordering = ['name', 'label']
+        ordering = ["name", "label"]
         verbose_name_plural = "Categories"
 
 
 class Division(HandyHelperBaseModel):
     """ """
+
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     label = models.CharField(max_length=2)
     name = models.CharField(max_length=64)
@@ -151,12 +151,13 @@ class Division(HandyHelperBaseModel):
         return self.name
 
     class Meta:
-        unique_together = (("category", "name"), )
-        ordering = ['category', 'label']
+        unique_together = (("category", "name"),)
+        ordering = ["category", "label"]
 
 
 class Participant(HandyHelperBaseModel):
     """ """
+
     parade = models.ForeignKey("Parade", on_delete=models.CASCADE)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     division = models.ForeignKey("Division", on_delete=models.CASCADE)
@@ -170,6 +171,7 @@ class Participant(HandyHelperBaseModel):
 
 class AwardType(HandyHelperBaseModel):
     """ """
+
     name = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=255, blank=True)
     enabled = models.BooleanField(default=True)
@@ -179,7 +181,8 @@ class AwardType(HandyHelperBaseModel):
 
 
 class Award(HandyHelperBaseModel):
-    """ """ 
+    """ """
+
     award_type = models.ForeignKey("AwardType", on_delete=models.CASCADE)
     division = models.ForeignKey("Division", blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=32, blank=True)
@@ -190,7 +193,7 @@ class Award(HandyHelperBaseModel):
         return f"{self.division} - {self.name}" if self.division else self.name
 
     class Meta:
-        unique_together = (("division", "name"), )
+        unique_together = (("division", "name"),)
 
 
 class ParticipantAward(HandyHelperBaseModel):
