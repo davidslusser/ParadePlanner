@@ -13,7 +13,6 @@ django.setup()
 
 from model_bakery import baker
 
-
 # class AddressTests(TestCase):
 #     """test CRUD operations on Address"""
 

@@ -18,6 +18,7 @@ dependencies = [
     "drf-flex-fields",
     "drf-spectacular",
     "drf-renderer-xlsx",
+    "phonenumbers",
 ]
 description = "Redwood City Parade Planner"
 dynamic = ["version"]
@@ -80,6 +81,10 @@ omit = [
 
 [tool.isort]
 profile = "black"
+skip = [
+    "src/django_project/tests/",
+    "src/django_project/casemgr/migrations/"
+]
 
 
 [tool.mypy]
