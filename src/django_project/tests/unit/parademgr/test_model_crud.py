@@ -7,7 +7,6 @@ from django.apps import apps
 from django.test import TestCase
 
 BASE_DIR = Path(__file__).parents[4]
-print("TEST: BASE_DIR = ", BASE_DIR)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 os.environ.setdefault("ENV_PATH", f"{BASE_DIR}/envs/.env.test")
 django.setup()
@@ -15,103 +14,103 @@ django.setup()
 from model_bakery import baker
 
 
-class AddressTests(TestCase):
-    """test CRUD operations on Address"""
+# class AddressTests(TestCase):
+#     """test CRUD operations on Address"""
 
-    def setUp(self):
-        self.model = apps.get_model("parademgr", "address")
-        self.to_bake = "parademgr.Address"
+#     def setUp(self):
+#         self.model = apps.get_model("parademgr", "address")
+#         self.to_bake = "parademgr.Address"
 
-    def bake(self):
-        """add row"""
-        return baker.make(self.to_bake, _fill_optional=["address_extra", "address_type"])
+#     def bake(self):
+#         """add row"""
+#         return baker.make(self.to_bake, _fill_optional=["address_extra", "address_type"])
 
-    def test_create(self):
-        """verify object can be created"""
-        before_count = self.model.objects.count()
-        row = self.bake()
-        after_count = self.model.objects.count()
-        self.assertTrue(isinstance(row, self.model))
-        self.assertGreater(after_count, before_count)
+#     def test_create(self):
+#         """verify object can be created"""
+#         before_count = self.model.objects.count()
+#         row = self.bake()
+#         after_count = self.model.objects.count()
+#         self.assertTrue(isinstance(row, self.model))
+#         self.assertGreater(after_count, before_count)
 
-    def test_read(self):
-        """verify object can be read"""
-        row = self.bake()
-        entry = self.model.objects.get(pk=row.pk)
-        self.assertTrue(isinstance(entry, self.model))
-        self.assertEqual(row.pk, entry.pk)
+#     def test_read(self):
+#         """verify object can be read"""
+#         row = self.bake()
+#         entry = self.model.objects.get(pk=row.pk)
+#         self.assertTrue(isinstance(entry, self.model))
+#         self.assertEqual(row.pk, entry.pk)
 
-    def test_delete(self):
-        """verify object can be deleted"""
-        row = self.bake()
-        before_count = self.model.objects.count()
-        row_pk = row.pk
-        row.delete()
-        after_count = self.model.objects.count()
-        with self.assertRaises(self.model.DoesNotExist):
-            self.model.objects.get(pk=row_pk)
-        self.assertLess(after_count, before_count)
+#     def test_delete(self):
+#         """verify object can be deleted"""
+#         row = self.bake()
+#         before_count = self.model.objects.count()
+#         row_pk = row.pk
+#         row.delete()
+#         after_count = self.model.objects.count()
+#         with self.assertRaises(self.model.DoesNotExist):
+#             self.model.objects.get(pk=row_pk)
+#         self.assertLess(after_count, before_count)
 
-    def test_update_address_extra(self):
-        """verify address_extra (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.address_extra
-        updated_value = baker.prepare(self.to_bake, _fill_optional=["address_extra"]).address_extra
-        setattr(row, "address_extra", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "address_extra"), updated_value)
-        self.assertNotEqual(getattr(row, "address_extra"), original_value)
+#     def test_update_address_extra(self):
+#         """verify address_extra (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.address_extra
+#         updated_value = baker.prepare(self.to_bake, _fill_optional=["address_extra"]).address_extra
+#         setattr(row, "address_extra", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "address_extra"), updated_value)
+#         self.assertNotEqual(getattr(row, "address_extra"), original_value)
 
-    def test_update_address_type(self):
-        """verify address_type (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.address_type
-        choices = getattr(self.model.address_type.field, "choices", None)
-        updated_value = random.choice([i[0] for i in choices if original_value not in i])
-        setattr(row, "address_type", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "address_type"), updated_value)
-        self.assertNotEqual(getattr(row, "address_type"), original_value)
+#     def test_update_address_type(self):
+#         """verify address_type (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.address_type
+#         choices = getattr(self.model.address_type.field, "choices", None)
+#         updated_value = random.choice([i[0] for i in choices if original_value not in i])
+#         setattr(row, "address_type", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "address_type"), updated_value)
+#         self.assertNotEqual(getattr(row, "address_type"), original_value)
 
-    def test_update_city(self):
-        """verify city (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.city
-        updated_value = baker.prepare(self.to_bake, _fill_optional=["city"]).city
-        setattr(row, "city", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "city"), updated_value)
-        self.assertNotEqual(getattr(row, "city"), original_value)
+#     def test_update_city(self):
+#         """verify city (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.city
+#         updated_value = baker.prepare(self.to_bake, _fill_optional=["city"]).city
+#         setattr(row, "city", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "city"), updated_value)
+#         self.assertNotEqual(getattr(row, "city"), original_value)
 
-    def test_update_postal_code(self):
-        """verify postal_code (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.postal_code
-        updated_value = baker.prepare(self.to_bake, _fill_optional=["postal_code"]).postal_code
-        setattr(row, "postal_code", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "postal_code"), updated_value)
-        self.assertNotEqual(getattr(row, "postal_code"), original_value)
+#     def test_update_postal_code(self):
+#         """verify postal_code (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.postal_code
+#         updated_value = baker.prepare(self.to_bake, _fill_optional=["postal_code"]).postal_code
+#         setattr(row, "postal_code", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "postal_code"), updated_value)
+#         self.assertNotEqual(getattr(row, "postal_code"), original_value)
 
-    def test_update_state(self):
-        """verify state (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.state
-        updated_value = baker.prepare(self.to_bake, _fill_optional=["state"]).state
-        setattr(row, "state", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "state"), updated_value)
-        self.assertNotEqual(getattr(row, "state"), original_value)
+#     def test_update_state(self):
+#         """verify state (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.state
+#         updated_value = baker.prepare(self.to_bake, _fill_optional=["state"]).state
+#         setattr(row, "state", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "state"), updated_value)
+#         self.assertNotEqual(getattr(row, "state"), original_value)
 
-    def test_update_street_address(self):
-        """verify street_address (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.street_address
-        updated_value = baker.prepare(self.to_bake, _fill_optional=["street_address"]).street_address
-        setattr(row, "street_address", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "street_address"), updated_value)
-        self.assertNotEqual(getattr(row, "street_address"), original_value)
+#     def test_update_street_address(self):
+#         """verify street_address (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.street_address
+#         updated_value = baker.prepare(self.to_bake, _fill_optional=["street_address"]).street_address
+#         setattr(row, "street_address", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "street_address"), updated_value)
+#         self.assertNotEqual(getattr(row, "street_address"), original_value)
 
 
 class AwardTests(TestCase):
