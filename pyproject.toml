@@ -18,6 +18,7 @@ dependencies = [
     "drf-flex-fields",
     "drf-spectacular",
     "drf-renderer-xlsx",
+    "phonenumbers",
 ]
 description = "Redwood City Parade Planner"
 dynamic = ["version"]
@@ -50,8 +51,13 @@ dev = [
 
 
 [tool.bandit]
-exclude_dirs = ["venv", "django_project/tests", "django_project/*/management/commands"]
-
+exclude_dirs = [
+    "venv",
+    "local_test",
+    "django_project/tests", 
+    "django_project/*/management/commands"
+    ]
+skips = ["B311"]
 
 [tool.black]
 line-length = 120
@@ -75,16 +81,26 @@ omit = [
 
 [tool.isort]
 profile = "black"
+skip = [
+    "src/django_project/tests/",
+    "src/django_project/casemgr/migrations/"
+]
 
 
 [tool.mypy]
-exclude = ["venv/*", "^django_project/*/migrations/*"]
+exclude = [
+    "venv/*",
+    "local_test/*",
+    "migrations/*",
+    "admin.py"
+]
 ignore_missing_imports = true
+
 
 
 [tool.pytest.ini_options]
 addopts = "-s -v -x --strict-markers -m 'not extra'"
-testpaths = ["django_project"]
+testpaths = ["src/django_project"]
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning",
@@ -93,8 +109,7 @@ filterwarnings = [
 
 [tool.ruff]
 line-length = 120
-exclude = ["django_project/manage.py", "django_project/tests", "django_project/*/migrations", "django_project/*/scripts", "django_project/*/local_test"]
-
+exclude = ["src/django_project/manage.py", "src/django_project/tests", "src/django_project/*/migrations", "src/django_project/*/scripts", "src/django_project/*/local_test"]
 
 [tool.setuptools.packages.find]
 where = ["."]

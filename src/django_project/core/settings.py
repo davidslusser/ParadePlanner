@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-import environ
 import sys
-
 from pathlib import Path
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -279,9 +279,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 PROJECT_NAME = "Parade Planner"
-PROJECT_DESCRIPTION = (
-    """Parade Planner is a parade management platform """
-)
+PROJECT_DESCRIPTION = """Parade Planner is a parade management platform """
 PROJECT_VERSION = env.str("PROJECT_VERSION", "")
 # PROJECT_SOURCE = "https://github.com/djangoaddicts"
 

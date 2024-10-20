@@ -1,8 +1,15 @@
 {% extends BASE_TEMPLATE|default:"base.htm" %}
 {% load static %}
 
+
 {% block content %}
-    <main id="body_main" hx-get="{% url 'parademgr:list_divisions' display='table' %}" hx-trigger="load"> 
-        this is the divisions list page...
-    </main>
+    {% if request.is_htmx %}
+    <div 
+    hx-get="{% url 'parademgr:list_divisions' display='table' %}" 
+    hx-trigger="load"
+    ></div>
+    {% else %}
+    <div>{% include 'handyhelpers/htmx/bs5/table_wrapper.htm' %}</div>
+    {% endif %}
+
 {% endblock content %}

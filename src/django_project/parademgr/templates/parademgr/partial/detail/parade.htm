@@ -20,15 +20,15 @@
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="participants" role="tabpanel" aria-labelledby="participants-tab">
                 {% with object.get_participants as queryset %}
-                {% with 'parademgr/partial/table/participants.htm' as table %}
-                {% include 'handyhelpers/htmx/bs5/table_wrapper.htm' %}
+                {% with 'parademgr/partial/table/participants.htm' as item_content %}
+                {% include 'handyhelpers/htmx/bs5/htmx_option_multi_filter_view/wrapper_table.htm' %}
                 {% endwith %}
                 {% endwith %}
             </div>
             <div class="tab-pane fade" id="awards" role="tabpanel" aria-labelledby="awards-tab">
               {% with object.get_awards as queryset %}
-              {% with 'parademgr/partial/table/participant_awards.htm' as table %}
-              {% include 'handyhelpers/htmx/bs5/table_wrapper.htm' %}
+              {% with 'parademgr/partial/table/participant_awards.htm' as item_content %}
+              {% include 'handyhelpers/htmx/bs5/htmx_option_multi_filter_view/wrapper_table.htm' %}
               {% endwith %}
               {% endwith %}
             </div>

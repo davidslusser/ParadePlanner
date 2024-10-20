@@ -1,11 +1,14 @@
 {% extends BASE_TEMPLATE|default:"base.htm" %}
 {% load static %}
 
-{% block local_head %}
-{% endblock %}
-
 {% block content %}
-<main id="body_main" hx-get="{% url 'parademgr:detail_organization' object.pk %}" hx-trigger="load"> 
-    this is the organization detail page...
-</main>
+    {% if request.is_htmx %}
+    <div 
+    hx-get="{% url 'parademgr:detail_organization' object.pk %}" 
+    hx-trigger="load">
+    </div>
+    {% else %}
+    <div>{% include 'parademgr/partial/detail/organization.htm' %}</div>
+    {% endif %}
+
 {% endblock content %}

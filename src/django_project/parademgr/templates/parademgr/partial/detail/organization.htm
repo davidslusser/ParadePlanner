@@ -1,15 +1,217 @@
 <section class="animated fadeIn" style="animation-delay: .15s;">
-    <header class="mx-2">
+    <header class="mt-2 mb-5">
         <div class="headline text-center">
             <div class="container">
                 <div class="h1 text-primary fw-bold mb-3">{{ object }}</div>
+                <div class="h3 text-secondary fw-bold mb-3">{{ object.description }}</div>
             </div>
         </div>
     </header>
 </section>
-
+<!-- 
 <section>
-    <div class="container-fluid my-5 animated fadeIn" style="animation-delay: .25s;">
-        this is the organization detail partial
+    <div class="animated fadeIn" style="animation-delay: .25s;">
+        <div class="container-fluid px-5">
+            <div class="row text-center">
+                <div class="col-12 col-md-4 mb-5">
+                    <div class="card shadow" style="height: 60.5vh;">
+                        <div class="card-title my-3 text-primary fw-bold h3">Details</div>
+                        <div class="card-body" style="overflow-y: auto; overflow-x: hidden;">
+                            <div class="row text-center">
+                                <div class="col-12 my-3">
+                                    <span class="text-primary h5 fw-bold">Phone Numbers:</span><br/>
+                                    <span class="text-secondary">
+                                        {% for phone_number in object.phone_numbers.all %}
+                                        {{ phone_number.number }} <span class="small">({{ phone_number.get_phone_type_display }})</span><br/>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                                <div class="col-12 my-3"><span class="text-primary h5 fw-bold">Item Count:</span><br/><span class="text-secondary">{{ object.get_items.count }}</span></div>
+                                {% if object.purchase_order %}
+                                <div class="col-12 my-3"><span class="text-primary h5 fw-bold">Purchase Order:</span><br/><span class="text-secondary">{{ object.purchase_order }}</span></div>
+                                {% endif %}
+                                <div class="col-12 my-3"><span class="text-primary h5 fw-bold">Added By:</span><br/><span class="text-secondary">{{ object.added_by }}<br/><small>{{ object.created_at }}</small></span></div>
+                                {% if object.purchased_by %}
+                                <div class="col-12 my-3"><span class="text-primary h5 fw-bold">Purchased By:</span><br/><span class="text-secondary">{{ object.purchased_by }}<br/><small>{{ object.purchased_at }}</small></span></div>
+                                {% endif %}
+                                <div class="col-12 my-3"><span class="text-primary h5 fw-bold">Cost:</span><br/><span class="text-secondary">${{ object.get_cost|floatformat:2  }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 mb-5"> 
+                    <div class="row">
+                        <div class="card shadow" style="height: 29vh;">
+                            <div class="card-title my-3 text-primary fw-bold h3">Contacts</div>
+                            <div class="card-body" style="overflow-y: auto; overflow-x: hidden;">
+                                <ul class="list-group mx-auto justify-content-center" style="max-width: 91%; margin-top: .5%; margin-bottom: .5%">
+                                    {% for item in object.contacts.all %}
+                                    <div class="card shadow-sm hvr-grow my-2 py-1">
+                                        <div class="row small mx-2">
+                                            <div class="col-6 text-start">{{ item.first_name }} {{ item.last_name }}</div>
+                                            <div class="col-6 text-start"></div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card shadow" style="height: 29vh;">
+                            <div class="card-title my-3 text-primary fw-bold h3">Parade Entries</div>
+                            <div class="card-body" style="overflow-y: auto; overflow-x: hidden;">
+                                <ul class="list-group mx-auto justify-content-center" style="max-width: 91%; margin-top: .5%; margin-bottom: .5%">
+                                    {% for item in object.participant_set.all %}
+                                    <div class="card shadow-sm hvr-grow my-2 py-1">
+                                        <div class="row small mx-2">
+                                            <div class="col-12 text-start">{{ item.parade }}: <span class="ms-2 text-secondary">{{ item.division }}</span></div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+</section> -->
+
+<div class="container my-5">
+    <div class="row">
+      <div class="col-12">
+        <div class="grid-container">
+          <div class="grid-item card">
+            <div class="card-title">Details</div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-12 my-3">
+                        <span class="text-primary h6 fw-bold">Addresses:</span><br/>
+                        <span class="text-secondary">
+                            {% for item in object.addresses.all %}
+                            <span class="small">{{ item }}</span><br/>
+                            {% endfor %}
+                        </span>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12 my-3">
+                        <span class="text-primary h6 fw-bold">Phone Numbers:</span><br/>
+                        <span class="text-secondary">
+                            {% for phone_number in object.phone_numbers.all %}
+                            {{ phone_number.number }} <span class="small">({{ phone_number.get_phone_type_display }})</span><br/>
+                            {% endfor %}
+                        </span>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12 my-3">
+                        <span class="text-primary h6 fw-bold">Emails:</span><br/>
+                        <span class="text-secondary">
+                            {% for item in object.emails.all %}
+                            <span class="small">{{ item }}</span><br/>
+                            {% endfor %}
+                        </span>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12 my-3">
+                        <span class="text-primary h6 fw-bold">Links:</span><br/>
+                        <span class="text-secondary">
+                            {% for item in object.links.all %}
+                            <span class="small">{{ item }}</span><br/>
+                            {% endfor %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="grid-item card">
+            <div class="card-title">
+              Contacts
+            </div>
+            <div class="card-body">
+                {% for item in object.contacts.all %}
+                <div class="bordered-item hvr-grow">{{ item.first_name }} {{ item.last_name }}</div>
+                {% endfor %}
+            </div>
+          </div>
+          
+          <div class="grid-item card">
+            <div class="card-title">
+              Parades
+            </div>
+            <div class="card-body">
+                {% for item in object.participant_set.all %}
+                <div class="bordered-item hvr-grow">{{ item.parade }}:<br/><span class="ms-2 text-secondary">{{ item.division }}</span></div>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Custom CSS for Grid Layout -->
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: .5rem 1.75rem; /* Equal vertical and horizontal gap */
+      height: 68vh; /* Take up available vertical space */
+    }
+  
+    .grid-container > .card:first-child {
+      grid-row: 1 / 3; /* First column spans both rows */
+    }
+
+  /* Ensure bordered items take full width */
+  .bordered-item {
+    width: 92%; /* Take full width of the card body */
+    text-align: center; /* Optional: center text inside the item */
+    background-color: var(--bs-light);
+    font-size: .8rem;
+    border: 1px solid #dee2e6; /* Bootstrap's default border style */
+    padding: 0.5rem; /* Equivalent to Bootstrap's p-2 padding */
+    margin-bottom: 0.5rem; /* To provide space between items */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  }
+
+    .card-title {
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        color: var(--bs-primary);
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin: 1rem;
+    }
+
+    /* Ensure the card body content takes full width */
+    .card-body {
+        /* display: flex; */
+        justify-content: center; /* Centers horizontally */
+        width: 100%; /* Ensure full width */
+        height: 100%; /* Ensure full height of card */
+        text-align: center; /* Optional: center text inside the card body */
+    }
+  
+  
+    /* Responsive behavior for small screens */
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr; /* Single column on small screens */
+        grid-template-rows: auto;   /* Each card takes its own row */
+        gap: 1rem; /* Equal gap between rows in single column layout */
+        height: auto; /* Remove fixed height for smaller screens */
+      }
+  
+      .grid-container > .card:first-child {
+        grid-row: auto; /* No need to span rows in a single column layout */
+      }
+    }
+  </style>
+  
