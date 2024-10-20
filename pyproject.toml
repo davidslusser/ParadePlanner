@@ -95,7 +95,7 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 addopts = "-s -v -x --strict-markers -m 'not extra'"
-testpaths = ["django_project"]
+testpaths = ["src/django_project"]
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning",
@@ -104,8 +104,7 @@ filterwarnings = [
 
 [tool.ruff]
 line-length = 120
-exclude = ["django_project/manage.py", "django_project/tests", "django_project/*/migrations", "django_project/*/scripts", "django_project/*/local_test"]
-
+exclude = ["src/django_project/manage.py", "src/django_project/tests", "src/django_project/*/migrations", "src/django_project/*/scripts", "src/django_project/*/local_test"]
 
 [tool.setuptools.packages.find]
 where = ["."]

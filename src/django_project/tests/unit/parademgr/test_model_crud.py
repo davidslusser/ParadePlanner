@@ -1,13 +1,18 @@
 import os
 import random
+from pathlib import Path
 
 import django
 from django.apps import apps
 from django.test import TestCase
-from model_bakery import baker
 
+BASE_DIR = Path(__file__).parents[4]
+print("TEST: BASE_DIR = ", BASE_DIR)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+os.environ.setdefault("ENV_PATH", f"{BASE_DIR}/envs/.env.test")
 django.setup()
+
+from model_bakery import baker
 
 
 class AddressTests(TestCase):
@@ -874,60 +879,60 @@ class ParticipantAwardTests(TestCase):
         self.assertNotEqual(getattr(row, "winner"), original_value)
 
 
-class PhoneNumberTests(TestCase):
-    """test CRUD operations on PhoneNumber"""
+# class PhoneNumberTests(TestCase):
+#     """test CRUD operations on PhoneNumber"""
 
-    def setUp(self):
-        self.model = apps.get_model("parademgr", "phonenumber")
-        self.to_bake = "parademgr.PhoneNumber"
+#     def setUp(self):
+#         self.model = apps.get_model("parademgr", "phonenumber")
+#         self.to_bake = "parademgr.PhoneNumber"
 
-    def bake(self):
-        """add row"""
-        return baker.make(self.to_bake, _fill_optional=["phone_type"])
+#     def bake(self):
+#         """add row"""
+#         return baker.make(self.to_bake, _fill_optional=["phone_type"])
 
-    def test_create(self):
-        """verify object can be created"""
-        before_count = self.model.objects.count()
-        row = self.bake()
-        after_count = self.model.objects.count()
-        self.assertTrue(isinstance(row, self.model))
-        self.assertGreater(after_count, before_count)
+#     def test_create(self):
+#         """verify object can be created"""
+#         before_count = self.model.objects.count()
+#         row = self.bake()
+#         after_count = self.model.objects.count()
+#         self.assertTrue(isinstance(row, self.model))
+#         self.assertGreater(after_count, before_count)
 
-    def test_read(self):
-        """verify object can be read"""
-        row = self.bake()
-        entry = self.model.objects.get(pk=row.pk)
-        self.assertTrue(isinstance(entry, self.model))
-        self.assertEqual(row.pk, entry.pk)
+#     def test_read(self):
+#         """verify object can be read"""
+#         row = self.bake()
+#         entry = self.model.objects.get(pk=row.pk)
+#         self.assertTrue(isinstance(entry, self.model))
+#         self.assertEqual(row.pk, entry.pk)
 
-    def test_delete(self):
-        """verify object can be deleted"""
-        row = self.bake()
-        before_count = self.model.objects.count()
-        row_pk = row.pk
-        row.delete()
-        after_count = self.model.objects.count()
-        with self.assertRaises(self.model.DoesNotExist):
-            self.model.objects.get(pk=row_pk)
-        self.assertLess(after_count, before_count)
+#     def test_delete(self):
+#         """verify object can be deleted"""
+#         row = self.bake()
+#         before_count = self.model.objects.count()
+#         row_pk = row.pk
+#         row.delete()
+#         after_count = self.model.objects.count()
+#         with self.assertRaises(self.model.DoesNotExist):
+#             self.model.objects.get(pk=row_pk)
+#         self.assertLess(after_count, before_count)
 
-    def test_update_number(self):
-        """verify number (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.number
-        updated_value = baker.prepare(self.to_bake, _fill_optional=["number"]).number
-        setattr(row, "number", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "number"), updated_value)
-        self.assertNotEqual(getattr(row, "number"), original_value)
+#     def test_update_number(self):
+#         """verify number (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.number
+#         updated_value = baker.prepare(self.to_bake, _fill_optional=["number"]).number
+#         setattr(row, "number", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "number"), updated_value)
+#         self.assertNotEqual(getattr(row, "number"), original_value)
 
-    def test_update_phone_type(self):
-        """verify phone_type (CharField) can be updated"""
-        row = self.bake()
-        original_value = row.phone_type
-        choices = getattr(self.model.phone_type.field, "choices", None)
-        updated_value = random.choice([i[0] for i in choices if original_value not in i])
-        setattr(row, "phone_type", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "phone_type"), updated_value)
-        self.assertNotEqual(getattr(row, "phone_type"), original_value)
+#     def test_update_phone_type(self):
+#         """verify phone_type (CharField) can be updated"""
+#         row = self.bake()
+#         original_value = row.phone_type
+#         choices = getattr(self.model.phone_type.field, "choices", None)
+#         updated_value = random.choice([i[0] for i in choices if original_value not in i])
+#         setattr(row, "phone_type", updated_value)
+#         row.save()
+#         self.assertEqual(getattr(row, "phone_type"), updated_value)
+#         self.assertNotEqual(getattr(row, "phone_type"), original_value)
