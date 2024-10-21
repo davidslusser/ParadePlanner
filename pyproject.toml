@@ -49,6 +49,11 @@ dev = [
     "typing_extensions",
 ]
 
+prod = [
+    "gunicorn",
+    "psycopg2-binary"
+]
+
 
 [tool.bandit]
 exclude_dirs = [
